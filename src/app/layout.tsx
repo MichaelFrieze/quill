@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar';
 import { cn } from '@/lib/utils';
 import './globals.css';
 import type { Metadata } from 'next';
@@ -23,6 +24,7 @@ export default function RootLayout({
           inter.className
         )}
       >
+        <Navbar />
         {children}
       </body>
     </html>
