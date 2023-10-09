@@ -2,7 +2,7 @@
 
 Built with the Next.js 13.5 App Router, tRPC, TypeScript, Prisma & Tailwind
 
-[I am following this tutorial](https://youtu.be/ucX2zXAZ1I0?si=UKU81ytMfPGYqmdC&t=5187)
+[I am following this tutorial](https://youtu.be/ucX2zXAZ1I0?si=OSsQCBwwgUW0WCHJ&t=7973)
 
 ## Features
 

@@ -14,7 +14,7 @@ const Page = () => {
     onSuccess: ({ success }) => {
       if (success) {
         // user is synced to db
-        return 'it works';
+        router.push(origin ? `/${origin}` : '/dashboard');
       }
     },
   });
