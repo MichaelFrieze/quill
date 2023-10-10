@@ -5,7 +5,8 @@ const page = () => {
   const { getUser } = getKindeServerSession();
   const user = getUser();
 
-  if (!user || !user.id) redirect('/auth-callback?origin=dashboard');
+  // if (!user || !user.id) redirect('/auth-callback?origin=dashboard');
+  if (!user || !user.id) redirect('/auth-callback');
 
   return (
     <div>
