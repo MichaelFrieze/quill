@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
 import { Button } from './ui/button';
+
 import Dropzone from 'react-dropzone';
 import { Cloud, File, Loader2 } from 'lucide-react';
 import { Progress } from './ui/progress';
@@ -11,14 +12,16 @@ import { useToast } from './ui/use-toast';
 import { trpc } from '@/app/_trpc/client';
 import { useRouter } from 'next/navigation';
 
-const UploadDropzone = () => {
+const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
   const router = useRouter();
 
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const { toast } = useToast();
 
-  const { startUpload } = useUploadThing('pdfUploader');
+  const { startUpload } = useUploadThing(
+    isSubscribed ? 'proPlanUploader' : 'freePlanUploader'
+  );
 
   const { mutate: startPolling } = trpc.getFile.useMutation({
     onSuccess: (file) => {
@@ -52,6 +55,7 @@ const UploadDropzone = () => {
 
         const progressInterval = startSimulatedProgress();
 
+        // handle file uploading
         const res = await startUpload(acceptedFile);
 
         if (!res) {
@@ -97,7 +101,9 @@ const UploadDropzone = () => {
                   <span className="font-semibold">Click to upload</span> or drag
                   and drop
                 </p>
-                <p className="text-xs text-zinc-500">PDF (up to 4MB)</p>
+                <p className="text-xs text-zinc-500">
+                  PDF (up to {isSubscribed ? '16' : '4'}MB)
+                </p>
               </div>
 
               {acceptedFiles && acceptedFiles[0] ? (
@@ -143,7 +149,7 @@ const UploadDropzone = () => {
   );
 };
 
-const UploadButton = () => {
+const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -160,7 +166,7 @@ const UploadButton = () => {
       </DialogTrigger>
 
       <DialogContent>
-        <UploadDropzone />
+        <UploadDropzone isSubscribed={isSubscribed} />
       </DialogContent>
     </Dialog>
   );
